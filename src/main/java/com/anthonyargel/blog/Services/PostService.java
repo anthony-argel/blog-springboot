@@ -7,8 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PostService {
     private final PostRepository postRepository;
@@ -21,6 +19,8 @@ public class PostService {
     public Page<Post> getAllPosts(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
+
+    public Page<Post> getAllPostsByCategoryName(String categoryName, Pageable pageable) {return postRepository.findByCategoryName(categoryName, pageable);}
 
     public Post getPostById(Long id) {
         return postRepository.findById(id).orElse(null);
