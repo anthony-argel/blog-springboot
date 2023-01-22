@@ -8,17 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class AuthController {
     private final AuthenticationService authService;
 
     public AuthController(AuthenticationService authService) {
         this.authService = authService;
-    }
-
-    @GetMapping("/")
-    public String response() {
-        return "Hi, this worked";
     }
 
     @PostMapping("/register")

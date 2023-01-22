@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/category/public")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -36,40 +36,4 @@ public class CategoryController {
         }
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
-
-    @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        try {
-            Category newCategory = categoryService.createCategory(new Category(category.getName()));
-            return new ResponseEntity<>(newCategory, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @ModelAttribute Category category) {
-        Category currentCategory = categoryService.getCategoryById(id);
-        if(currentCategory == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        currentCategory.setName(category.getName());
-        try {
-            Category updatedCategory = categoryService.updateCategory(currentCategory);
-            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
-        Category currentCategory = categoryService.getCategoryById(id);
-        if(currentCategory == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        categoryService.deleteCategory(id);
-        return new ResponseEntity<>(new String("Category Deleted"), HttpStatus.OK);
-    }
-
 }
